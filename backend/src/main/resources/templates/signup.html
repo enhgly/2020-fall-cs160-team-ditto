@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#submit").submit(function(event) {
+                event.preventDefault();
+                ajaxPost();
+            });
+
+            function ajaxPost() {
+                var login = {
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "api/user/save",
+                    data: JSON.stringify(login),
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result);
+                        $('#username').val("");
+                        $('#password').val("");
+                    },
+                    error: function(msg) {
+                        console.log(msg.responseText);
+                    }
+                });
+            }
+        });
+    </script>
+
+<body style="background-color: #f8f8ff;">
+    <div id="messages">
+        <h1>
+            Signup Page
+        </h1>
+        <input type='text' id='username' name='username' /></br>
+        <input type='text' id='password' name='password' /></br>
+        <form id="submit" action="">
+            <button>Sign Up</button>
+        </form>
+        <form id="return" action="/index">
+            <button>Return</button>
+        </form>
+    </div>
+</body>
+</html>
