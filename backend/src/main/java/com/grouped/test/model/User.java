@@ -1,4 +1,4 @@
-package com.grouped.test;
+package com.grouped.test.model;
 
 import java.lang.annotation.Inherited;
 
@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

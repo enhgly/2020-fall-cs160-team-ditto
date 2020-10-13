@@ -1,4 +1,4 @@
-package com.grouped.test;
+package com.grouped.test.model;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,4 +1,4 @@
-package com.grouped.test;
+package com.grouped.test.sqlite;
 
 import java.sql.Types;
 

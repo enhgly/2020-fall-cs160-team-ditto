@@ -1,4 +1,4 @@
-package com.grouped.test;
+package com.grouped.test.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.grouped.test.model.*;
+
 @Service
 public class PersonService {
 	
-
-	@Autowired
 	private PersonRepo personRepo;
 	
 	public Long addPerson(User person) {
