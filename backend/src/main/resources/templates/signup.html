@@ -12,8 +12,13 @@
 
             function ajaxPost() {
                 var login = {
-                    username: $('#username').val(),
-                    password: $('#password').val()
+                    firstName: $('#fName').val(),
+                    lastName: $('#lName').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val(),
+                    dateOfBirth: $('#DoB').val(),
+                    gender: $('#gender').val(),
+                    phone: $('#phone').val()
                 }
                 $.ajax({
                     type: "POST",
@@ -23,8 +28,13 @@
                     dataType: 'json',
                     success: function(result) {
                         console.log(result);
-                        $('#username').val("");
+                        $('#fName').val("");
+                        $('#lName').val("");
+                        $('#email').val("");
                         $('#password').val("");
+                        $('#DoB').val("");
+                        $('#gender').val("");
+                        $('#phone').val("");
                     },
                     error: function(msg) {
                         console.log(msg.responseText);
@@ -36,17 +46,46 @@
 
 <body style="background-color: #f8f8ff;">
     <div id="messages">
-        <h1>
-            Signup Page
-        </h1>
-        <input type='text' id='username' name='username' /></br>
-        <input type='text' id='password' name='password' /></br>
+        <h1>Create New Account</h1>
+        <label for="fName">First Name:</label><br>
+        <input type="text" id="fName" name="FirstName"><br><br>
+
+        <label for="lName">Last Name: </label><br>
+        <input type="text" id="lName" name="LastName"><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="Email"><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="text" id="password" name="Password"><br><br>
+
+        <label for="DoB">Date of Birth:</label><br>
+        <input type="date" id="DoB" name="BirthDay"><br><br>
+
+        <label for="gender">Gender:</label><br>
+        <input type="text" id="gender" name="Gender"><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="text" id="phone" name="PhoneNumber"><br><br>
+
         <form id="submit" action="">
             <button>Sign Up</button>
         </form>
         <form id="return" action="/index">
             <button>Return</button>
         </form>
+<!--        -->
+<!--        <h1>-->
+<!--            Signup Page-->
+<!--        </h1>-->
+<!--        <input type='text' id='username' name='username' /></br>-->
+<!--        <input type='text' id='password' name='password' /></br>-->
+<!--        <form id="submit" action="">-->
+<!--            <button>Sign Up</button>-->
+<!--        </form>-->
+<!--        <form id="return" action="/index">-->
+<!--            <button>Return</button>-->
+<!--        </form>-->
     </div>
 </body>
 </html>
