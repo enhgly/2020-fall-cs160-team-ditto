@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.grouped.grouped.model.Person;
 import com.grouped.grouped.model.User;
@@ -37,15 +38,28 @@ public class PersonController {
 		personService.addPerson(person);
 	}
 	
-	@GetMapping
+	@GetMapping(value = "/fetch")
 	public List<User> getAllPeople() { 
 		return personService.getAllPeople();
 	}
 	
+	@PostMapping(value = "/get")
+	public Boolean compare(@RequestBody User person) { 
+		List<User> users = personService.getAllPeople();
+		//System.out.println(person);
+		for(User u : users) {
+			if(person.getEmail().equals(u.getEmail()) && person.getPassword().equals(u.getPassword())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@DeleteMapping(path = "{id}")
 	public void deletePersonById(@PathVariable("id") Long id) {
 		personService.deletePerson(id);
 	}
+
 	/*
 	@GetMapping(path = "/{id}")
 	public Person getPersonById(@PathVariable("id")UUID id) {

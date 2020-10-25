@@ -16,4 +16,9 @@ public class WebController {
     public String signup() {
         return "signup";
     }
+
+    @GetMapping(value="/mainpage")
+    public String mainpage() {
+        return "main_profile";
+    }
 }

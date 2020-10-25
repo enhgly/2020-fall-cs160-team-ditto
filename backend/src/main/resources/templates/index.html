@@ -31,19 +31,26 @@
 
             function ajaxPost() {
                 var login = {
-                    username: $('#username').val(),
+                    email: $('#username').val(),
                     password: $('#password').val()
                 }
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "api/user/test",
+                    url: "api/user/get",
                     data: JSON.stringify(login),
                     dataType: 'json',
                     success: function(result) {
-                        console.log(result);
                         $('#username').val("");
                         $('#password').val("");
+                        if(result == true) {
+                            $("#results").html("");
+                            window.location.href = "mainpage";
+                        }
+                        else {
+                            $("#results").html("");
+                            $("#results").html("Incorrect email/password");
+                        }
                     },
                     error: function(msg) {
                         console.log(msg.responseText);
