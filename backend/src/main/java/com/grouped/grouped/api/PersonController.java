@@ -1,6 +1,7 @@
 package com.grouped.grouped.api;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -16,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grouped.grouped.model.Person;
-import com.grouped.grouped.model.User;
 import com.grouped.grouped.service.PersonService;
 
 
-	// api/v1/person is the path from the Postman 
-@RequestMapping("api/user")
+	// apo/v1/person is the path from the Postman 
+@RequestMapping("api/v1/person")
 @RestController
 public class PersonController {
 	
@@ -32,20 +32,16 @@ public class PersonController {
 		this.personService = personService; 
 	}
 	
-	@PostMapping(value = "/save")
-	public void addPerson(@Valid @NonNull @RequestBody User person) {
+	@PostMapping
+	public void addPerson(@Valid @NonNull @RequestBody Person person) {
 		personService.addPerson(person);
 	}
 	
 	@GetMapping
-	public List<User> getAllPeople() { 
+	public List<Person> getAllPeople() { 
 		return personService.getAllPeople();
 	}
 	
-	@DeleteMapping(path = "{id}")
-	public void deletePersonById(@PathVariable("id") Long id) {
-		personService.deletePerson(id);
-	}
 	/*
 	@GetMapping(path = "/{id}")
 	public Person getPersonById(@PathVariable("id")UUID id) {

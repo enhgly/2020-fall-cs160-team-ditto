@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.grouped.grouped.model.Person;
 import com.grouped.grouped.model.PersonRepo;
-import com.grouped.grouped.model.User;
 
 
 @Service
@@ -23,24 +22,20 @@ public class PersonService {
 	@Autowired
 	private PersonRepo personRepo;
 	
-	public Long addPerson(User person) {
+	public Long addPerson(Person person) {
 		return personRepo.save(person).getId();
 	}
 	
 
-	public List<User> getAllPeople(){
-		List<User> users = new ArrayList<User>();
-		personRepo.findAll().forEach(users::add);
-        return users;
+	public List<Person> getAllPeople(){
+		List<Person> messages = new ArrayList<Person>();
+		personRepo.findAll().forEach(messages::add);
+        return messages;
     }
 
-	public void deletePerson(Long id) {
-		personRepo.deleteById(id);
-	}
 	
 	// use save or delete methods
 	// use find method to return a single person
-	// look up JPA methods
 /*
 	public Optional<Person> getPersonById(UUID id){
 		return personDao.selectPersonById(id);
