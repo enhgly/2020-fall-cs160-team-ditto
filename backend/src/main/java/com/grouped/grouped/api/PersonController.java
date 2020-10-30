@@ -42,6 +42,11 @@ public class PersonController {
 		return personService.getAllPeople();
 	}
 	
+	@GetMapping(value = "/login")
+	public Long getUserIdFromLogin(@PathVariable("email") String email, @PathVariable("password") String password) {
+		return personService.getByEmailandPassword(email, password);
+	}
+	
 	@DeleteMapping(path = "{id}")
 	public void deletePersonById(@PathVariable("id") Long id) {
 		personService.deletePerson(id);

@@ -34,6 +34,9 @@ public class PersonService {
         return users;
     }
 
+	public Long getByEmailandPassword(String emailAddress, String password){
+		return personRepo.findByEmailAddressAndPassword(emailAddress, password).get(0).getId();
+	}
 	public void deletePerson(Long id) {
 		personRepo.deleteById(id);
 	}
