@@ -4,12 +4,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="../login_style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#yes").submit(function (event) {
+            $("#yes").click(function (event) {
                 event.preventDefault();
                 ajaxPost();
+            });
+
+            $("#no").click(function (event) {
+                event.preventDefault();
+                ajaxGet();
             });
 
             function ajaxPost() {
@@ -18,15 +27,22 @@
                     password: $('#password').val()
                 }
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     contentType: "application/json",
                     url: "api/user/signin",
                     data: JSON.stringify(login),
                     dataType: 'json',
                     success: function (result) {
-                        console.log(result);
                         $('#username').val("");
                         $('#password').val("");
+                        if(result == true) {
+                            $("#results").html("");
+                            window.location.href = "mainpage";
+                        }
+                        else {
+                            $("#results").html("");
+                            $("#results").html("Incorrect email/password");
+                        }
                     },
                     error: function (msg) {
                         console.log(msg.responseText);
@@ -52,10 +68,6 @@
 
 </head>
 
-<head>
-    <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="../login_style.css">
-
 <body>
     <div class="loginbox">
         <img src="grouped.png" class="avatar">
@@ -68,9 +80,9 @@
             <input type="submit" name="" value="Login" id="yes">
             <a href="#">Lost your password?</a><br>
             <a href="/signup">Don't have an account?</a>
+            <button id="no">Test</button>
+            <div id="results" style="font-size: xx-large;"></div>
         </form>
     </div>
 </body>
-</head>
-
 </html>
