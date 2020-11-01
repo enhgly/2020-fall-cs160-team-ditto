@@ -1,32 +1,15 @@
-<!--<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
-</body>
-</html>-->
-
-<!DOCTYPE HTML>
-
 <html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#yes").submit(function(event) {
+        $(document).ready(function () {
+            $("#yes").submit(function (event) {
                 event.preventDefault();
                 ajaxPost();
-            });
-
-            $("#get").submit(function(event) {
-                event.preventDefault();
-                ajaxGet();
             });
 
             function ajaxPost() {
@@ -37,29 +20,15 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "api/user/test",
+                    url: "api/user/fetch",
                     data: JSON.stringify(login),
                     dataType: 'json',
-                    success: function(result) {
+                    success: function (result) {
                         console.log(result);
                         $('#username').val("");
                         $('#password').val("");
                     },
-                    error: function(msg) {
-                        console.log(msg.responseText);
-                    }
-                });
-            }
-
-            function ajaxGet() {
-                $.ajax({
-                    type: "GET",
-                    contentType: "application/json",
-                    url: "api/user/fetch",
-                    success: function(result) {
-                        console.log(result);
-                    },
-                    error: function(msg) {
+                    error: function (msg) {
                         console.log(msg.responseText);
                     }
                 });
@@ -69,25 +38,25 @@
 
 </head>
 
-<body style="background-color: #f8f8ff;">
-    <div id="messages">
-        <h1>
-            Login Page
-        </h1>
-        <img src='../grouped.png' alt='grouped logo' width='50' height='50'></br>
-        <input type='text' id='username' name='username' /></br>
-        <input type='text' id='password' name='password' /></br>
-        <form id="yes" action="">
-            <button>Sign in</button>
-        </form>
-        <form id = "no" action="/signup">
-            <button>Sign Up</button>
-        </form>
-        <form id = "get" action="">
-            <br>
-            <button>Fetch</button>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="../login_style.css">
+
+<body>
+    <div class="loginbox">
+        <img src="grouped.png" class="avatar">
+        <h1>Grouped</h1>
+        <form>
+            <p>Username</p>
+            <input type="text" name="" placeholder="Enter Username">
+            <p>Password</p>
+            <input type="password" name="" placeholder="Enter Password">
+            <input type="submit" name="" value="Login" id="yes">
+            <a href="#">Lost your password?</a><br>
+            <a href="/signup">Don't have an account?</a>
         </form>
     </div>
-    <div id="results"></div>
 </body>
+</head>
+
 </html>
