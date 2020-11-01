@@ -18,7 +18,7 @@
                     password: $('#password').val()
                 }
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     contentType: "application/json",
                     url: "api/user/fetch",
                     data: JSON.stringify(login),
@@ -48,9 +48,9 @@
         <h1>Grouped</h1>
         <form>
             <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username">
+            <input type="text" name="" placeholder="Enter Username" id="username">
             <p>Password</p>
-            <input type="password" name="" placeholder="Enter Password">
+            <input type="password" name="" placeholder="Enter Password" id="password">
             <input type="submit" name="" value="Login" id="yes">
             <a href="#">Lost your password?</a><br>
             <a href="/signup">Don't have an account?</a>

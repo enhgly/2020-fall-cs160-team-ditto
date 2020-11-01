@@ -37,7 +37,7 @@ public class PersonController {
 		personService.addPerson(person);
 	}
 	
-	@GetMapping
+	@GetMapping(value="/fetch")
 	public List<User> getAllPeople() { 
 		return personService.getAllPeople();
 	}
