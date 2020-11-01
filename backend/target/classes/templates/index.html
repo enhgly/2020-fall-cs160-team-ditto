@@ -27,7 +27,7 @@
                     password: $('#password').val()
                 }
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     contentType: "application/json",
                     url: "api/user/signin",
                     data: JSON.stringify(login),
@@ -35,14 +35,15 @@
                     success: function (result) {
                         $('#username').val("");
                         $('#password').val("");
-                        if(result == true) {
+                        console.log(result);
+                        /*if(result > 0) {
                             $("#results").html("");
-                            window.location.href = "mainpage";
+                            window.location.href = "profile";
                         }
                         else {
                             $("#results").html("");
                             $("#results").html("Incorrect email/password");
-                        }
+                        }*/
                     },
                     error: function (msg) {
                         console.log(msg.responseText);

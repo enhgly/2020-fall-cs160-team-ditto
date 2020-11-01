@@ -42,9 +42,9 @@ public class PersonController {
 		return personService.getAllPeople();
 	}
 	
-	@GetMapping(value = "/signin, /{email}, /{password}")
-	public Long getUserIdFromLogin(@PathVariable("email") String email, @PathVariable("password") String password) {
-		return personService.getByEmailandPassword(email, password);
+	@PostMapping(value = "/signin")
+	public Long getUserIdFromLogin(@RequestBody User person) {
+		return personService.getByEmailandPassword(person.getEmail(), person.getPassword());
 	}
 	
 	@DeleteMapping(path = "{id}")

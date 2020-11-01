@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.grouped.grouped.model.Person;
 import com.grouped.grouped.model.PersonRepo;
 import com.grouped.grouped.model.User;
-
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PersonService {
@@ -34,13 +34,14 @@ public class PersonService {
         return users;
     }
 
-	public Long getByEmailandPassword(String email, String password){
+	public Long getByEmailandPassword(@PathVariable("email") String email, @PathVariable("password") String password){
 		List<User> test = personRepo.findByEmailAndPassword(email, password);
 		if(test.size() > 0) {
 			return test.get(0).getId();
 		}
 		return new Long(-1);
 	}
+
 	public void deletePerson(Long id) {
 		personRepo.deleteById(id);
 	}
