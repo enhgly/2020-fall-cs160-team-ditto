@@ -18,9 +18,9 @@
                     password: $('#password').val()
                 }
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     contentType: "application/json",
-                    url: "api/user/fetch",
+                    url: "api/user/signin",
                     data: JSON.stringify(login),
                     dataType: 'json',
                     success: function (result) {
@@ -29,6 +29,20 @@
                         $('#password').val("");
                     },
                     error: function (msg) {
+                        console.log(msg.responseText);
+                    }
+                });
+            }
+
+            function ajaxGet() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "api/user/fetch",
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function(msg) {
                         console.log(msg.responseText);
                     }
                 });
