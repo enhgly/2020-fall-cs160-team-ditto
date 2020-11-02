@@ -33,7 +33,7 @@ public class PostController {
 		postService.addPost(post);
 	}
 	
-	@GetMapping(value = "/post")
+	@GetMapping(value = "/retrieve_posts")
 	public List<Post> getAllPosts() { 
 		return postService.getAllPosts();
 	}
