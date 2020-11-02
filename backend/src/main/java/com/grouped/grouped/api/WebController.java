@@ -22,4 +22,14 @@ public class WebController {
     public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "profile";
     }    
+
+    @GetMapping(value="/home")
+    public String home(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "home";
+    }   
+
+    /*@GetMapping(value="/event")
+    public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "profile";
+    }*/    
 }

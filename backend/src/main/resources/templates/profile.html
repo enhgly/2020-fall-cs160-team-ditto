@@ -50,6 +50,7 @@
             createdDate: (new Date()).toString(),
             user: user_data.firstName + " " + user_data.lastName
           }
+          console.log(temp.user);
           $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -106,7 +107,7 @@
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
+      <li><a href="/home">Home</a></li>
       <li><a href="#">Groups</a></li>
       <li><a href="#">Profile</a></li>
       <li><a href="#">Posts</a></li>
