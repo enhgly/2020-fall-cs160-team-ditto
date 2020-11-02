@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class User {
+public class Event {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventId;
