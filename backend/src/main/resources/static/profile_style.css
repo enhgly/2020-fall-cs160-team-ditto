@@ -22,9 +22,23 @@ body {
   place-items: center;
 }
 
-body .content {
+body .container {
   display: block;
-  margin-bottom: 1500px;
+  margin-top: 250;
+}
+
+body .container .content {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 500;
+  width: 1000;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+body .container .secondary {
+  display: block;
   margin-left: auto;
   margin-right: auto;
   height: 500;

@@ -17,6 +17,7 @@ public class Post {
 	private Long channelId;
 	private Long userId;
 	private String postText;
+	private String user;
 	@NotNull
 	private String createdDate;
 	
@@ -51,7 +52,11 @@ public class Post {
 		this.createdDate = createdDate;
 	}
 	
+	public void setUser(String user) {
+		this.user = user;
+	}
 
-
-
+	public String getUser() {
+		return user;
+	}
 }

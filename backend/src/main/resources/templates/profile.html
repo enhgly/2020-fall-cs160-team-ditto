@@ -1,3 +1,4 @@
+<html>
 <header>
   <link rel="stylesheet" type="text/css" href="../profile_style.css">
   <h1 class="logo">Grouped
@@ -10,22 +11,26 @@
         var n = url.indexOf("=");
         var res = parseInt(url.substring(n + 1));
         var user_data;
+        onStart();
 
-        $.ajax({
-          type: "POST",
-          contentType: "application/json",
-          url: "api/user/user",
-          data: JSON.stringify({ id: res }),
-          dataType: "json",
-          success: function (result) {
-            user_data = result;
-            $("#welcome-text").append("Welcome Back, " + result.firstName);
-            $("#welcome-text").append("<br>What's on your mind: ");
-          },
-          error: function (msg) {
-            console.log(msg.responseText);
-          }
-        });
+        function onStart() {
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "api/user/user",
+            data: JSON.stringify({ id: res }),
+            dataType: "json",
+            success: function (result) {
+              user_data = result;
+              $("#welcome-text").append("Welcome Back, " + result.firstName);
+              $("#welcome-text").append("<br>What's on your mind: ");
+              feed();
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
 
         $("#confirm").click(function (event) {
           event.preventDefault();
@@ -42,7 +47,8 @@
             channelId: 0,
             userId: user_data.id,
             postText: $("#status").val(),
-            createdDate: (new Date()).toString()
+            createdDate: (new Date()).toString(),
+            user: user_data.firstName + " " + user_data.lastName
           }
           $.ajax({
             type: "POST",
@@ -52,10 +58,28 @@
             dataType: 'json',
             success: function (result) {
               $("#status").html("");
-              console.log("woke")
+              console.log("woke");
+              window.location.href = url;
             },
             error: function (msg) {
-              console.log("broke")
+              console.log("broke");
+              window.location.href = url;
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function feed() {
+          $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "grouped/retrieve_posts",
+            success: function (result) {
+              for (i = result.length-1; i >= 0; i--) {
+                $("#container").append("<br><div class=\"secondary\">" + result[i].user + ": " + result[i].postText + "</div>");
+              }
+            },
+            error: function (msg) {
               console.log(msg.responseText);
             }
           });
@@ -95,10 +119,14 @@
 </header>
 
 <body>
-  <div class="content">
-    <div id="welcome-text">
+  <div class="container" id="container">
+    <div class="content">
+      <div id="welcome-text">
+      </div>
+      <input type="text" id="status" /><button id="confirm">Post</button>
+      <button id="test">test</button>
     </div>
-    <input type="text" id="status" /><button id="confirm">Post</button>
-    <button id="test">test</button>
   </div>
 </body>
+
+</html>
