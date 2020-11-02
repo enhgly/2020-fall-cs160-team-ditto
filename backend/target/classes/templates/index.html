@@ -33,11 +33,12 @@
                     data: JSON.stringify(login),
                     dataType: 'json',
                     success: function (result) {
+                        console.log(result);
                         $('#email').val("");
                         $('#password').val("");
                         if(result > 0) {
                             $("#results").html("");
-                            window.location.href = "profile";
+                            window.location.href = "profile" + "?id=" + result;
                         }
                         else {
                             $("#results").html("");

@@ -3,6 +3,7 @@ package com.grouped.grouped.api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebController {
@@ -18,7 +19,7 @@ public class WebController {
     }
 
     @GetMapping(value="/profile")
-    public String profile() {
+    public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "profile";
     }    
 }
