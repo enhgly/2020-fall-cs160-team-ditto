@@ -51,6 +51,12 @@ public class PersonController {
 	public void deletePersonById(@PathVariable("id") Long id) {
 		personService.deletePerson(id);
 	}
+
+	@PostMapping(value = "/user")
+	public User getPersonById(@RequestBody User person) {
+		return personService.getPersonById(person.getId());
+	}
+
 	/*
 	@GetMapping(path = "/{id}")
 	public Person getPersonById(@PathVariable("id")UUID id) {

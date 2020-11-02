@@ -44,6 +44,16 @@ public class PersonService {
 	public void deletePerson(Long id) {
 		personRepo.deleteById(id);
 	}
+
+	public User getPersonById(@PathVariable("id") Long id) {
+		List<Long> temp = new ArrayList<>();
+		temp.add(id);
+		List<User> res = new ArrayList<>();
+		personRepo.findAllById(temp).forEach(res::add);
+		//System.out.println(res.get(0));
+		//return personRepo.findById(id);
+		return res.get(0);
+	}
 	
 	// use save or delete methods
 	// use find method to return a single person

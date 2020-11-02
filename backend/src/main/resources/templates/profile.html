@@ -1,26 +1,53 @@
 <header>
   <link rel="stylesheet" type="text/css" href="../profile_style.css">
-    <h1 class="logo">Grouped
+  <h1 class="logo">Grouped
     <img src="grouped.png" class="logo">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var url = document.URL;
+        var n = url.indexOf("=");
+        var res = parseInt(url.substring(n + 1));
+
+        $.ajax({
+          type: "POST",
+          contentType: "application/json",
+          url: "api/user/user",
+          data: JSON.stringify({id: res}), 
+          dataType: "json",
+          success: function (result) {
+            $("#welcome-text").append("Welcome Back, " + result.firstName);
+            $("#welcome-text").append("<br>What's on your mind: ");
+          },
+          error: function (msg) {
+            console.log(msg.responseText);
+          }
+        });
+      });
+    </script>
+
+
   </h1>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Groups</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Posts</a></li>
-        <li><a href="#">Settings</a></li>
-      </ul>
-    </nav>
-    <label for="nav-toggle" class="nav-toggle-label">
-      <span></span>
-    </label>
-  </header>
-  
-  <body>
-    <div class="content">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Groups</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Posts</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+  </label>
+</header>
+
+<body>
+  <div class="content">
+    <div id="welcome-text">
     </div>
-  </body>
-  
+    <input type="text" id="status" />
+  </div>
+</body>
