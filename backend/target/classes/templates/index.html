@@ -23,7 +23,7 @@
 
             function ajaxPost() {
                 var login = {
-                    username: $('#username').val(),
+                    email: $('#email').val(),
                     password: $('#password').val()
                 }
                 $.ajax({
@@ -33,17 +33,16 @@
                     data: JSON.stringify(login),
                     dataType: 'json',
                     success: function (result) {
-                        $('#username').val("");
+                        $('#email').val("");
                         $('#password').val("");
-                        console.log(result);
-                        /*if(result > 0) {
+                        if(result > 0) {
                             $("#results").html("");
                             window.location.href = "profile";
                         }
                         else {
                             $("#results").html("");
                             $("#results").html("Incorrect email/password");
-                        }*/
+                        }
                     },
                     error: function (msg) {
                         console.log(msg.responseText);
@@ -75,7 +74,7 @@
         <h1>Grouped</h1>
         <form>
             <p>Username</p>
-            <input type="text" name="" placeholder="Enter Username" id="username">
+            <input type="text" name="" placeholder="Enter Email" id="email">
             <p>Password</p>
             <input type="password" name="" placeholder="Enter Password" id="password">
             <input type="submit" name="" value="Login" id="yes">

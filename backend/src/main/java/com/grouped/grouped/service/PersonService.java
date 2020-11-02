@@ -35,6 +35,7 @@ public class PersonService {
     }
 
 	public Long getByEmailandPassword(@PathVariable("email") String email, @PathVariable("password") String password){
+		System.out.println(email + ", " + password);
 		List<User> test = personRepo.findByEmailAndPassword(email, password);
 		if(test.size() > 0) {
 			return test.get(0).getId();
