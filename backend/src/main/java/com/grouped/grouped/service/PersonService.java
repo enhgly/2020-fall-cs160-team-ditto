@@ -27,7 +27,6 @@ public class PersonService {
 		return personRepo.save(person).getId();
 	}
 	
-
 	public List<User> getAllPeople(){
 		List<User> users = new ArrayList<User>();
 		personRepo.findAll().forEach(users::add);
@@ -35,7 +34,6 @@ public class PersonService {
     }
 
 	public Long getByEmailandPassword(@PathVariable("email") String email, @PathVariable("password") String password){
-		System.out.println(email + ", " + password);
 		List<User> test = personRepo.findByEmailAndPassword(email, password);
 		if(test.size() > 0) {
 			return test.get(0).getId();
