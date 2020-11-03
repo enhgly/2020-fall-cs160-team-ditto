@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.grouped.grouped.model.Person;
 import com.grouped.grouped.model.PersonRepo;
 import com.grouped.grouped.model.User;
-
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PersonService {
@@ -27,15 +27,32 @@ public class PersonService {
 		return personRepo.save(person).getId();
 	}
 	
-
 	public List<User> getAllPeople(){
 		List<User> users = new ArrayList<User>();
 		personRepo.findAll().forEach(users::add);
         return users;
     }
 
+	public Long getByEmailandPassword(@PathVariable("email") String email, @PathVariable("password") String password){
+		List<User> test = personRepo.findByEmailAndPassword(email, password);
+		if(test.size() > 0) {
+			return test.get(0).getId();
+		}
+		return new Long(-1);
+	}
+
 	public void deletePerson(Long id) {
 		personRepo.deleteById(id);
+	}
+
+	public User getPersonById(@PathVariable("id") Long id) {
+		List<Long> temp = new ArrayList<>();
+		temp.add(id);
+		List<User> res = new ArrayList<>();
+		personRepo.findAllById(temp).forEach(res::add);
+		//System.out.println(res.get(0));
+		//return personRepo.findById(id);
+		return res.get(0);
 	}
 	
 	// use save or delete methods

@@ -1,0 +1,81 @@
+<html>
+<header>
+  <link rel="stylesheet" type="text/css" href="../profile_style.css">
+  <h1 class="logo">Grouped
+    <img src="grouped.png" class="logo">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var url = document.URL;
+        var n = url.indexOf("=");
+        var res = parseInt(url.substring(n + 1));
+        var user_data;
+        onStart();
+
+        function onStart() {
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "api/user/user",
+            data: JSON.stringify({ id: res }),
+            dataType: "json",
+            success: function (result) {
+              user_data = result;
+              $("#welcome-text").append("Welcome Back, " + result.firstName + "<br>Here's what you missed:");
+              feed();
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function feed() {
+          $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "grouped/retrieve_posts",
+            success: function (result) {
+              for (i = result.length - 1; i >= 0; i--) {
+                if (result[i].userId != user_data.id) {
+                  $("#container").append("<br><div class=\"secondary\">" + result[i].user + ": " + result[i].postText + "</div>");
+                }
+              }
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+      });
+    </script>
+
+
+  </h1>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="#">Groups</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Posts</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+  </label>
+</header>
+
+<body>
+  <div class="container" id="container">
+    <div class="content">
+      <div id="welcome-text">
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

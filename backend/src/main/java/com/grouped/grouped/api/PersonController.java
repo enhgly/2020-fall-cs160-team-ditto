@@ -37,14 +37,34 @@ public class PersonController {
 		personService.addPerson(person);
 	}
 	
-	@GetMapping
+	@GetMapping(value="/fetch")
 	public List<User> getAllPeople() { 
 		return personService.getAllPeople();
+	}
+	
+	@PostMapping(value = "/signin")
+	public Long getUserIdFromLogin(@RequestBody User person) {
+		return personService.getByEmailandPassword(person.getEmail(), person.getPassword());
 	}
 	
 	@DeleteMapping(path = "{id}")
 	public void deletePersonById(@PathVariable("id") Long id) {
 		personService.deletePerson(id);
+	}
+
+	@PostMapping(value = "/user")
+	public User getPersonById(@RequestBody User person) {
+		return personService.getPersonById(person.getId());
+	}
+	@PostMapping(path = "/verifyemail")
+	public Boolean isEmailTaken(@RequestBody User email){
+		List<User> userList = getAllPeople();
+		for (int i = 0; i < userList.size(); i++){
+			if(userList.get(i).getEmail().equals(email.getEmail())){
+				return false;
+			}
+		}
+		return true;
 	}
 	/*
 	@GetMapping(path = "/{id}")
