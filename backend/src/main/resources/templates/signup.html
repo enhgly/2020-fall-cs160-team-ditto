@@ -7,9 +7,32 @@
         $(document).ready(function() {
             $("#submit").submit(function(event) {
                 event.preventDefault();
-                ajaxPost();
+                emailVerify();
+                //ajaxPost();
             });
-
+            function emailVerify(){
+                var email = { email: $('#email').val()}
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "api/user/verifyemail",
+                    data: JSON.stringify(email),
+                    dataType: 'json',
+                    success: function(result) {
+                        if(result==true){
+                            $("#signupstatus").html("");
+                            $("#signupstatus").html("Sign up complete");
+                            ajaxPost(); //if the email is verified then log fields as a User
+                        }else{
+                            $("#signupstatus").html("");
+                            $("#signupstatus").html("Email not unique");      //outputs message saying email has been taken
+                        }
+                    },
+                    error: function(msg){
+                        console.log(msg.responseText);
+                    }
+                });
+            }
             function ajaxPost() {
                 var login = {
                     firstName: $('#fName').val(),
@@ -87,5 +110,6 @@
 <!--            <button>Return</button>-->
 <!--        </form>-->
     </div>
+    <div id="signupstatus"></div>
 </body>
 </html>

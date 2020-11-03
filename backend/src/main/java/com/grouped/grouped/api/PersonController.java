@@ -56,7 +56,16 @@ public class PersonController {
 	public User getPersonById(@RequestBody User person) {
 		return personService.getPersonById(person.getId());
 	}
-
+	@PostMapping(path = "/verifyemail")
+	public Boolean isEmailTaken(@RequestBody User email){
+		List<User> userList = getAllPeople();
+		for (int i = 0; i < userList.size(); i++){
+			if(userList.get(i).getEmail().equals(email.getEmail())){
+				return false;
+			}
+		}
+		return true;
+	}
 	/*
 	@GetMapping(path = "/{id}")
 	public Person getPersonById(@PathVariable("id")UUID id) {
