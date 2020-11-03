@@ -1,0 +1,109 @@
+<html>
+<header>
+  <link rel="stylesheet" type="text/css" href="../profile_style.css">
+  <h1 class="logo">Grouped
+    <img src="grouped.png" class="logo">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var url = document.URL;
+        var n = url.indexOf("=");
+        var res = parseInt(url.substring(n + 1));
+        var user_data;
+        onStart();
+
+        function onStart() {
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "api/user/user",
+            data: JSON.stringify({ id: res }),
+            dataType: "json",
+            success: function (result) {
+              user_data = result;
+              $("#welcome-text").append("Plan your event: ");
+              feed();
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        $("#confirm").click(function (event) {
+          event.preventDefault();
+          ajaxPost();
+        });
+
+        function ajaxPost() {
+          var temp = {
+            details: $("#status").val()
+          }
+          console.log(temp.user);
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "partytime/event",
+            data: JSON.stringify(temp),
+            dataType: 'json',
+            success: function (result) {
+              $("#status").html("");
+              console.log("woke");
+              window.location.href = url;
+            },
+            error: function (msg) {
+              console.log("broke");
+              window.location.href = url;
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function feed() {
+          $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "partytime/event_fetch",
+            success: function (result) {
+              for (i = result.length-1; i >= 0; i--) {
+                $("#container").append("<br><div class=\"secondary\">" + result[i].details + "</div>");
+              }
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+      });
+    </script>
+
+
+  </h1>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="#">Groups</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Posts</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+  </label>
+</header>
+
+<body>
+  <div class="container" id="container">
+    <div class="content">
+      <div id="welcome-text">
+      </div>
+      <input type="text" id="status" /><button id="confirm">Post</button>
+      <button id="test">test</button>
+    </div>
+  </div>
+</body>
+
+</html>

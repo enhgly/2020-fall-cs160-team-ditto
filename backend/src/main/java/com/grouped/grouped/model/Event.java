@@ -26,4 +26,8 @@ public class Event {
    public String getDetails() {
         return details;
    }
+
+   public Long getId() {
+       return eventId;
+   }
 }

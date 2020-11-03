@@ -26,6 +26,11 @@ public class WebController {
     @GetMapping(value="/home")
     public String home(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "home";
+    }
+    
+    @GetMapping(value="/party")
+    public String event(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "event";
     }   
 
     /*@GetMapping(value="/event")

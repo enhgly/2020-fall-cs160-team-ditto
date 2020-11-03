@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grouped.grouped.model.Channel;
+import com.grouped.grouped.model.Event;
+import com.grouped.grouped.service.EventService;
 
-import com.grouped.grouped.service.ChannelService;
 
-
-@RequestMapping("/grouped")
+@RequestMapping("/partytime")
 @RestController
 public class EventController {
 	
@@ -32,17 +31,17 @@ public class EventController {
 	
 	@PostMapping(value = "/event")
 	public void addEvent(@Valid @NonNull @RequestBody Event event) {
-		channelService.addChannel(event);
+		eventService.addEvent(event);
 	}
 	
 	@GetMapping(value = "/event_fetch")
-	public List<Channel> getAllChannels() { 
-		return channelService.getAllChannels();
+	public List<Event> getAllEvent() { 
+		return eventService.getAllEvent();
 	}
 	
 	@DeleteMapping(path = "/channel/{id}")
-	public void deleteChannelById(@PathVariable("id") Long id) {
-		channelService.deleteChannel(id);
+	public void deleteEventById(@PathVariable("id") Long id) {
+		eventService.deleteEvent(id);
 	}
 
 }
