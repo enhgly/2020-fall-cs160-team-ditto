@@ -77,8 +77,68 @@
             url: "grouped/retrieve_posts",
             success: function (result) {
               for (i = result.length-1; i >= 0; i--) {
-                $("#container").append("<br><div class=\"secondary\">" + result[i].user + ": " + result[i].postText + "</div>");
+                $("#container").append("<br><div class=\"secondary\" id=\"" + (i*10) + "\">"
+                  + result[i].user + ": " + result[i].postText + 
+                "<br><button class=\"check\">Check Comments</button><br><input type=\"text\" id=\"comment" + i + "\"/>" +
+                "<button class=\"create\">Comment</button></div>");
+                var input = document.getElementById((i*10) + "");
+                let poid = result[i].postId;
+                //console.log(input.children);
+                input.children[1].onclick = function(event) {
+                  var ele = this;
+                  commentCheck(event, ele, poid);
+                };
+                input.children[4].onclick = function(event) {
+                  var ele = this;
+                  commentCreate(event, ele, poid);
+                }
               }
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function commentCreate(event, ele, poid) {
+          event.preventDefault();
+          if(ele == "0") {
+            var text_id = ele.parentElement.id;
+          }
+          else {
+            var text_id = (ele.parentElement.id) / 10;
+          }
+          var new_comment = {
+            postId: poid,
+            contents: $("#comment" + text_id).val(),
+            name: user_data.firstName + " " + user_data.lastName
+          }
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "comments/save",
+            data: JSON.stringify(new_comment),
+            dataType: 'json',
+            success: function (result) {
+              $("#comment" + text_id).val("");
+              console.log("woke");
+              //window.location.href = url;
+            },
+            error: function (msg) {
+              console.log("broke");
+              //window.location.href = url;
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function commentCheck(event, ele, poid) {
+          $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "comments/fetch",
+            success: function (result) {
+              console.log(result);
             },
             error: function (msg) {
               console.log(msg.responseText);
