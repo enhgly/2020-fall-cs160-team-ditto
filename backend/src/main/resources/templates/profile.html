@@ -91,7 +91,7 @@
                 input.children[4].onclick = function(event) {
                   var ele = this;
                   commentCreate(event, ele, poid);
-                }
+                };
               }
             },
             error: function (msg) {
@@ -134,9 +134,11 @@
 
         function commentCheck(event, ele, poid) {
           $.ajax({
-            type: "GET",
+            type: "POST",
             contentType: "application/json",
-            url: "comments/fetch",
+            url: "comments/retrieve_comments",
+            data: JSON.stringify({postId: poid}),
+            dataType: "json",
             success: function (result) {
               console.log(result);
             },

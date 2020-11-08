@@ -39,7 +39,7 @@ public class CommentController {
 		return commentService.getAllComment();
     }
     
-    @GetMapping(value="/retrieve_comments")
+    @PostMapping(value="/retrieve_comments")
 	public List<Comment> getByPostId(@RequestBody Comment comment) { 
 		return commentService.getByPostId(comment.getPostId());
     }
