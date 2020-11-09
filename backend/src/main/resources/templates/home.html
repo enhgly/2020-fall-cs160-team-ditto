@@ -96,19 +96,7 @@
         }
 
         function commentCheck(event, ele, poid) {
-          $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "comments/retrieve_comments",
-            data: JSON.stringify({ postId: poid }),
-            dataType: "json",
-            success: function (result) {
-              console.log(result);
-            },
-            error: function (msg) {
-              console.log(msg.responseText);
-            }
-          });
+          window.location.href = "comment" + "?id=" + poid;
         }
       });
     </script>

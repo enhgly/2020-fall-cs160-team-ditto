@@ -23,7 +23,7 @@ public class EventService {
 	private EventRepo eventRepo;
 	
 	public Long addEvent(Event event) {
-		return eventRepo.save(event).getId();
+		return eventRepo.save(event).getEventId();
 	}
 	
 	public List<Event> getAllEvent(){

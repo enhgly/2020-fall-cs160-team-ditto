@@ -67,7 +67,16 @@
             url: "partytime/event_fetch",
             success: function (result) {
               for (i = result.length-1; i >= 0; i--) {
-                $("#container").append("<br><div class=\"secondary\">" + result[i].details + "</div>");
+                $("#container").append("<br><div class=\"secondary\" id=\"" + i + "\">" + result[i].details + 
+                "<br><button>Going</button><button>See Who\'s Going</button></div>");
+                var input = document.getElementById(i + "");
+                let evid = result[i].eventId;
+                input.children[1].onclick = function(event) {
+                  yesGoing(evid);
+                };
+                input.children[2].onclick = function(event) {
+                  getGoing(evid);
+                };
               }
             },
             error: function (msg) {
@@ -75,6 +84,43 @@
             }
           });
         }
+
+        function yesGoing(evid) {
+          var going_details = {
+            eventId: evid,
+            name: user_data.firstName + " " + user_data.lastName
+          }
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "going/save",
+            data: JSON.stringify(going_details),
+            dataType: 'json',
+            success: function (result) {
+              console.log("woke");
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        function getGoing(evid) {
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "going/retrieve_going",
+            data: JSON.stringify({eventId: evid}),
+            dataType: 'json',
+            success: function (result) {
+              console.log(result);
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
       });
     </script>
 

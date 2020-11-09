@@ -27,7 +27,11 @@ public class Event {
         return details;
    }
 
-   public Long getId() {
+   public Long getEventId() {
        return eventId;
+   }
+
+   public void setEventId(Long eventId) {
+       this.eventId = eventId;
    }
 }

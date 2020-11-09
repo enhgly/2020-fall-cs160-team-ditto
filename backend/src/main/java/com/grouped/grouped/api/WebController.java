@@ -33,6 +33,11 @@ public class WebController {
         return "event";
     }   
 
+    @GetMapping(value="/comment")
+    public String comment(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "comment";
+    }   
+
     /*@GetMapping(value="/event")
     public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "profile";

@@ -1,0 +1,56 @@
+<html>
+<header>
+    <link rel="stylesheet" type="text/css" href="../profile_style.css">
+    <h1 class="logo">Grouped
+        <img src="grouped.png" class="logo">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var url = document.URL;
+                var n = url.indexOf("=");
+                var res = parseInt(url.substring(n + 1));
+                commentCheck(res);
+
+                function commentCheck(poid) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "comments/retrieve_comments",
+                        data: JSON.stringify({ postId: poid }),
+                        dataType: "json",
+                        success: function (result) {
+                            for (i = result.length - 1; i >= 0; i--) {
+                                $("#container").append("<br><div class=\"secondary\">" + result[i].name + ": " + result[i].contents + "</div>");
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg.responseText);
+                        }
+                    });
+                }
+            });
+        </script>
+
+    </h1>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </nav>
+    <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+    </label>
+</header>
+
+<body>
+    <div class="container" id="container">
+    </div>
+</body>
+
+</html>
