@@ -68,14 +68,17 @@
             success: function (result) {
               for (i = result.length-1; i >= 0; i--) {
                 $("#container").append("<br><div class=\"secondary\" id=\"" + i + "\">" + result[i].details + 
-                "<br><button>Going</button><button>See Who\'s Going</button></div>");
+                "<br><button id=\"going"  + i + "\">Going</button><button>See Who\'s Going</button></div>");
                 var input = document.getElementById(i + "");
                 let evid = result[i].eventId;
+                let tag = i;
+                tryGoing(evid, tag);
                 input.children[1].onclick = function(event) {
                   yesGoing(evid);
+                  //visual confirmation here
                 };
                 input.children[2].onclick = function(event) {
-                  getGoing(evid);
+                  getGoing(tag, evid);
                 };
               }
             },
@@ -98,14 +101,16 @@
             dataType: 'json',
             success: function (result) {
               console.log("woke");
+              window.location.href = url;
             },
             error: function (msg) {
               console.log(msg.responseText);
+              window.location.href = url;
             }
           });
         }
 
-        function getGoing(evid) {
+        function getGoing(ele, evid) {
           $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -113,7 +118,9 @@
             data: JSON.stringify({eventId: evid}),
             dataType: 'json',
             success: function (result) {
-              console.log(result);
+              for (i = result.length-1; i >= 0; i--) {
+                $("#" + ele).append("<br>" + result[i].name + "</br>");
+              }
             },
             error: function (msg) {
               console.log(msg.responseText);
@@ -121,6 +128,25 @@
           });
         }
 
+        function tryGoing(evid, tag) {
+          $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "going/retrieve_going",
+            data: JSON.stringify({eventId: evid}),
+            dataType: 'json',
+            success: function (result) {
+              for (i = result.length-1; i >= 0; i--) {
+                if(result[i].name == (user_data.firstName + " " + user_data.lastName)) {
+                  document.getElementById("going"+tag).disabled = true;
+                }
+              }
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
       });
     </script>
 
