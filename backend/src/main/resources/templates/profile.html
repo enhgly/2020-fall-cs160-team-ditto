@@ -8,8 +8,9 @@
     <script>
       $(document).ready(function () {
         var url = document.URL;
-        var n = url.indexOf("=");
-        var res = parseInt(url.substring(n + 1));
+        var new_url = new URL(url);
+        var res = new_url.searchParams.get("id");
+        var channel = new_url.searchParams.get("channel");
         var user_data;
         onStart();
 
@@ -44,7 +45,7 @@
 
         function ajaxPost() {
           var temp = {
-            channelId: 0,
+            channelId: channel,
             userId: user_data.id,
             postText: $("#status").val(),
             createdDate: (new Date()).toString(),
@@ -76,22 +77,24 @@
             contentType: "application/json",
             url: "grouped/retrieve_posts",
             success: function (result) {
-              for (i = result.length-1; i >= 0; i--) {
-                $("#container").append("<br><div class=\"secondary\" id=\"" + (i*10) + "\">"
-                  + result[i].user + ": " + result[i].postText + 
-                "<br><button class=\"check\">Check Comments</button><br><input type=\"text\" id=\"comment" + i + "\"/>" +
-                "<button class=\"create\">Comment</button></div>");
-                var input = document.getElementById((i*10) + "");
-                let poid = result[i].postId;
-                //console.log(input.children);
-                input.children[1].onclick = function(event) {
-                  var ele = this;
-                  commentCheck(event, ele, poid);
-                };
-                input.children[4].onclick = function(event) {
-                  var ele = this;
-                  commentCreate(event, ele, poid);
-                };
+              for (i = result.length - 1; i >= 0; i--) {
+                if (result[i].channelId == channel) { //result.channelId != null || result.channelId == channel
+                  $("#container").append("<br><div class=\"secondary\" id=\"" + (i * 10) + "\">"
+                    + result[i].user + ": " + result[i].postText +
+                    "<br><button class=\"check\">Check Comments</button><br><input type=\"text\" id=\"comment" + i + "\"/>" +
+                    "<button class=\"create\">Comment</button></div>");
+                  var input = document.getElementById((i * 10) + "");
+                  let poid = result[i].postId;
+                  //console.log(input.children);
+                  input.children[1].onclick = function (event) {
+                    var ele = this;
+                    commentCheck(event, ele, poid);
+                  };
+                  input.children[4].onclick = function (event) {
+                    var ele = this;
+                    commentCreate(event, ele, poid);
+                  };
+                }
               }
             },
             error: function (msg) {
@@ -102,7 +105,7 @@
 
         function commentCreate(event, ele, poid) {
           event.preventDefault();
-          if(ele == "0") {
+          if (ele == "0") {
             var text_id = ele.parentElement.id;
           }
           else {

@@ -8,8 +8,8 @@
     <script>
       $(document).ready(function () {
         var url = document.URL;
-        var n = url.indexOf("=");
-        var res = parseInt(url.substring(n + 1));
+        var new_url = new URL(url);
+        var res = new_url.searchParams.get("id");
         var user_data;
         onStart();
 

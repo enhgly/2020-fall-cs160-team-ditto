@@ -14,24 +14,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Event {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventId;
-    private String details; //date, location, details of event
+    private String details; // date, location, details of event
+    private Long channelId;
 
-   public void setDetails(String details) {
-       this.details = details;
-   }
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
-   public String getDetails() {
+    public String getDetails() {
         return details;
-   }
+    }
 
-   public Long getEventId() {
-       return eventId;
-   }
+    public Long getEventId() {
+        return eventId;
+    }
 
-   public void setEventId(Long eventId) {
-       this.eventId = eventId;
-   }
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public Long getChannelId() {
+		return channelId;
+	}
+	public void setChannelId(Long channelId) {
+		this.channelId = channelId;
+	}
 }

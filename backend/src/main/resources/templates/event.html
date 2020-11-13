@@ -8,8 +8,9 @@
     <script>
       $(document).ready(function () {
         var url = document.URL;
-        var n = url.indexOf("=");
-        var res = parseInt(url.substring(n + 1));
+        var new_url = new URL(url);
+        var res = new_url.searchParams.get("id");
+        var channel = new_url.searchParams.get("channel");
         var user_data;
         onStart();
 
@@ -38,7 +39,8 @@
 
         function ajaxPost() {
           var temp = {
-            details: $("#status").val()
+            details: $("#status").val(),
+            channelId: channel
           }
           console.log(temp.user);
           $.ajax({
@@ -66,20 +68,22 @@
             contentType: "application/json",
             url: "partytime/event_fetch",
             success: function (result) {
-              for (i = result.length-1; i >= 0; i--) {
-                $("#container").append("<br><div class=\"secondary\" id=\"" + i + "\">" + result[i].details + 
-                "<br><button id=\"going"  + i + "\">Going</button><button>See Who\'s Going</button></div>");
-                var input = document.getElementById(i + "");
-                let evid = result[i].eventId;
-                let tag = i;
-                tryGoing(evid, tag);
-                input.children[1].onclick = function(event) {
-                  yesGoing(evid);
-                  //visual confirmation here
-                };
-                input.children[2].onclick = function(event) {
-                  getGoing(tag, evid);
-                };
+              for (i = result.length - 1; i >= 0; i--) {
+                if (result[i].channelId == channel) {
+                  $("#container").append("<br><div class=\"secondary\" id=\"" + i + "\">" + result[i].details +
+                    "<br><button id=\"going" + i + "\">Going</button><button>See Who\'s Going</button></div>");
+                  var input = document.getElementById(i + "");
+                  let evid = result[i].eventId;
+                  let tag = i;
+                  tryGoing(evid, tag);
+                  input.children[1].onclick = function (event) {
+                    yesGoing(evid);
+                    //visual confirmation here
+                  };
+                  input.children[2].onclick = function (event) {
+                    getGoing(tag, evid);
+                  };
+                }
               }
             },
             error: function (msg) {
@@ -115,10 +119,10 @@
             type: "POST",
             contentType: "application/json",
             url: "going/retrieve_going",
-            data: JSON.stringify({eventId: evid}),
+            data: JSON.stringify({ eventId: evid }),
             dataType: 'json',
             success: function (result) {
-              for (i = result.length-1; i >= 0; i--) {
+              for (i = result.length - 1; i >= 0; i--) {
                 $("#" + ele).append("<br>" + result[i].name + "</br>");
               }
             },
@@ -133,14 +137,33 @@
             type: "POST",
             contentType: "application/json",
             url: "going/retrieve_going",
-            data: JSON.stringify({eventId: evid}),
+            data: JSON.stringify({ eventId: evid }),
             dataType: 'json',
             success: function (result) {
-              for (i = result.length-1; i >= 0; i--) {
-                if(result[i].name == (user_data.firstName + " " + user_data.lastName)) {
-                  document.getElementById("going"+tag).disabled = true;
+              for (i = result.length - 1; i >= 0; i--) {
+                if (result[i].name == (user_data.firstName + " " + user_data.lastName)) {
+                  document.getElementById("going" + tag).disabled = true;
                 }
               }
+            },
+            error: function (msg) {
+              console.log(msg.responseText);
+            }
+          });
+        }
+
+        $("#something").click(function (event) {
+          event.preventDefault();
+          something();
+        });
+
+        function something() {
+          $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "partytime/event_fetch",
+            success: function (result) {
+              console.log(result);
             },
             error: function (msg) {
               console.log(msg.responseText);
@@ -173,7 +196,7 @@
       <div id="welcome-text">
       </div>
       <input type="text" id="status" /><button id="confirm">Post</button>
-      <button id="test">test</button>
+      <button id="something">test</button>
     </div>
   </div>
 </body>
