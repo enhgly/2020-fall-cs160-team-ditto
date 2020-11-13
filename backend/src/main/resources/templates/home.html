@@ -11,6 +11,10 @@
         var new_url = new URL(url);
         var res = new_url.searchParams.get("id");
         var user_data;
+
+        let a = document.getElementById("home");
+        a.href = "/home?id=" + res;
+
         onStart();
 
         function onStart() {
@@ -106,7 +110,7 @@
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <nav>
     <ul>
-      <li><a href="/home">Home</a></li>
+      <li><a id="home">Home</a></li>
       <li><a href="#">Groups</a></li>
       <li><a href="#">Settings</a></li>
     </ul>
