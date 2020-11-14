@@ -8,6 +8,9 @@ import org.openqa.selenium.logging.LogType;
 
 import java.util.List;
 
+//this requires external libraries
+//https://www.selenium.dev/downloads/
+//https://github.com/mozilla/geckodriver/releases
 public class Main {
     public static void main(String[] args){
         System.setProperty("webdriver.gecko.driver","C:\\Temp\\GeckoDriver\\geckodriver.exe");  //make sure to have this
