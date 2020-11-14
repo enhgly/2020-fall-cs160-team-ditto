@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.grouped.grouped.model.GroupCircle;
 import com.grouped.grouped.model.GroupCircleRepo;
-
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class GroupCircleService {
@@ -25,7 +25,13 @@ public class GroupCircleService {
 		List<GroupCircle> groups = new ArrayList<GroupCircle>();
 		groupRepo.findAll().forEach(groups::add);
         return groups;
-    }
+	}
+	
+	public List<GroupCircle> getByGroupId(@PathVariable("groupId") Long groupId){
+		List<GroupCircle> groups = new ArrayList<GroupCircle>();
+		groupRepo.findByGroupId(groupId).forEach(groups::add);
+        return groups;
+	}
 
 	public void deleteGroup(Long id) {
 		groupRepo.deleteById(id);

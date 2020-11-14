@@ -1,0 +1,112 @@
+<html>
+<header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = document.URL;
+            var new_url = new URL(url);
+            var res = new_url.searchParams.get("id");
+            var gid = new_url.searchParams.get("group");
+            onStart();
+
+
+            function onStart() {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "gc/get_id",
+                    data: JSON.stringify({groupId: gid}),
+                    success: function (result) {
+                        $("#title").append("<h1>" + result[0].groupName + "</h1>")
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            $("#add").click(function (event) {
+                event.preventDefault();
+                if($("#myform input[type='radio']:checked").val() != null) {
+                    newChannel();
+                }
+            });
+
+            $("#test").click(function (event) {
+                event.preventDefault();
+                testing();
+            });
+
+            $("#test2").click(function (event) {
+                event.preventDefault();
+                testing2(gid);
+            });
+
+            function newChannel() {
+                var more_data = {
+                    name: $("#channel_name").val(),
+                    groupId: gid,
+                    type: $("#myform input[type='radio']:checked").val()
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "channels/post",
+                    data: JSON.stringify(more_data),
+                    success: function (result) {
+                        window.location.href = url;
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function testing() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "channels/get",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function testing2(gid) {
+                var ljlj = {groupId : gid};
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "channels/get_id",
+                    data: JSON.stringify(ljlj),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+        })
+    </script>
+</header>
+
+<body>
+    <div id="title"></div>
+    <input type="text" id="channel_name" />
+    <form id="myForm">
+        <p>Type:</p>
+        <input type="radio" name="posts" value="posts" /> posts <br />
+        <input type="radio" name="posts" value="events" /> events <br />
+    </form>
+    <button id="add">Create Channel</button>
+    <button id="test">test</button>
+    <button id="test2">test2</button>
+</body>
+
+</html>

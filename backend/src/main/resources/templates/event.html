@@ -16,6 +16,9 @@
         let a = document.getElementById("home");
         a.href = "/home?id=" + res;
 
+        let b = document.getElementById("gps");
+        b.href = "/groups?id=" + res;
+
         onStart();
 
         function onStart() {
@@ -183,8 +186,8 @@
   <nav>
     <ul>
       <li><a id="home">Home</a></li>
-      <li><a href="#">Groups</a></li>
-      <li><a href="#">Channels</a></li>
+      <li><a id="gps">Groups</a></li>
+      <li><a id="wee">Channels</a></li>
       <li><a href="#">Settings</a></li>
     </ul>
   </nav>

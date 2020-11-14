@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.grouped.grouped.model.Channel;
 import com.grouped.grouped.model.ChannelRepo;
-
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class ChannelService {
@@ -25,7 +25,13 @@ public class ChannelService {
 		List<Channel> channels = new ArrayList<Channel>();
 		channelRepo.findAll().forEach(channels::add);
         return channels;
-    }
+	}
+	
+	public List<Channel> getByGroupId(@PathVariable("groupId") Long groupId){
+		List<Channel> channels = new ArrayList<Channel>();
+		channelRepo.findByGroupId(groupId).forEach(channels::add);
+        return channels;
+	}
 
 	public void deleteChannel(Long id) {
 		channelRepo.deleteById(id);

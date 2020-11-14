@@ -38,6 +38,16 @@ public class WebController {
         return "comment";
     }   
 
+    @GetMapping(value="/groups")
+    public String theName(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "groups";
+    }
+
+    @GetMapping(value="/group_channels")
+    public String ch(@RequestParam(required = false, defaultValue = "-1", value="id") Long id, @RequestParam(required = false, defaultValue = "-1", value="id") Long group) {
+        return "channels";
+    }
+
     /*@GetMapping(value="/event")
     public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "profile";

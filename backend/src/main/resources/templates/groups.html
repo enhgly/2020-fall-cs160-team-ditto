@@ -1,0 +1,132 @@
+<html>
+<header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = document.URL;
+            var new_url = new URL(url);
+            var res = new_url.searchParams.get("id");
+            list();
+
+            $("#add").click(function (event) {
+                event.preventDefault();
+                newGroup();
+            });
+
+            $("#test").click(function (event) {
+                event.preventDefault();
+                testing();
+            });
+
+            $("#test2").click(function (event) {
+                event.preventDefault();
+                testing2();
+            });
+
+            function newGroup() {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "gc/post",
+                    data: JSON.stringify({ groupName: $("#group_name").val() }),
+                    success: function (result) {
+                        associate(result);
+                        window.location.href = "group_channels" + "?id=" + res + "&group=" + result;
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function list() {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "servers/get_id",
+                    data: JSON.stringify({ userId: res }),
+                    success: function (result) {
+                        for (i = 0; i < result.length; i++) {
+                            anotherOne(result[i].groupId);
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function anotherOne(server_id) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "gc/get_id",
+                    data: JSON.stringify({ groupId: server_id }),
+                    success: function (result) {
+                        $("#listings").append("<a href=\"group_channels?id=" + res + "&group=" + result[0].groupId + "\">" + result[0].groupName + "</a></br>");
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function testing() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "gc/get",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function associate(group_id) {
+                var some_data = {
+                    groupId: group_id,
+                    userId: res
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "servers/post",
+                    data: JSON.stringify(some_data),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function testing2() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "servers/get",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(result);
+                    }
+                });
+            }
+        })
+    </script>
+</header>
+
+<body>
+    <div id="listings"></div>
+    <input type="text" id="group_name" />
+    <button id="add">New Group</button>
+    <button id="test">test</button>
+    <button id="test2">test2</button>
+</body>
+
+</html>
