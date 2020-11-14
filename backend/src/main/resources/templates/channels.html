@@ -8,7 +8,7 @@
             var res = new_url.searchParams.get("id");
             var gid = new_url.searchParams.get("group");
             onStart();
-
+            list();
 
             function onStart() {
                 $.ajax({
@@ -18,6 +18,24 @@
                     data: JSON.stringify({groupId: gid}),
                     success: function (result) {
                         $("#title").append("<h1>" + result[0].groupName + "</h1>")
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function list() {
+                var ljlj = {groupId : gid};
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "channels/get_id",
+                    data: JSON.stringify(ljlj),
+                    success: function (result) {
+                        for(i=0; i<result.length; i++) {
+                            $("#list_channels").append("<a href=\"profile?id=" + res + "&channel=" + result[i].channelId + "\">" + result[i].name + "</a></br>");
+                        }
                     },
                     error: function (msg) {
                         console.log(msg);
@@ -35,11 +53,6 @@
             $("#test").click(function (event) {
                 event.preventDefault();
                 testing();
-            });
-
-            $("#test2").click(function (event) {
-                event.preventDefault();
-                testing2(gid);
             });
 
             function newChannel() {
@@ -75,29 +88,13 @@
                     }
                 });
             }
-
-            function testing2(gid) {
-                var ljlj = {groupId : gid};
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    url: "channels/get_id",
-                    data: JSON.stringify(ljlj),
-                    success: function (result) {
-                        console.log(result);
-                    },
-                    error: function (msg) {
-                        console.log(msg);
-                    }
-                });
-            }
-
         })
     </script>
 </header>
 
 <body>
     <div id="title"></div>
+    <div id="list_channels"></div>
     <input type="text" id="channel_name" />
     <form id="myForm">
         <p>Type:</p>
@@ -106,7 +103,6 @@
     </form>
     <button id="add">Create Channel</button>
     <button id="test">test</button>
-    <button id="test2">test2</button>
 </body>
 
 </html>
