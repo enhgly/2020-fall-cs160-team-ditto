@@ -62,7 +62,7 @@ public class Main {
 
 /**
  * LOGIN
- */
+
         Scanner scan = new Scanner(System.in);
         //successful login
         ArrayList<loginInfo> list = new ArrayList<>();
@@ -79,23 +79,23 @@ public class Main {
             String input = scan.nextLine();
             System.out.println(input);
         }
+ */
 
-//        //Get the Web Element corresponding to the field Business Email (Textfield)
-//        WebElement email = driver.findElement(By.id("email"));
-//
-////Get the Web Element corresponding to the Password Field
-//        WebElement password = driver.findElement(By.id("password"));
-//
-////Find the Sign me in button
-//        WebElement login = driver.findElement(By.id("yes"));
-//
-//        email.sendKeys("theCHAMP1@gmail.com");
-//        password.sendKeys("password");
-//        login.submit();
-        //driver.navigate().refresh();
-        //not in database
-
-
+/**
+ * Post
+ */
+        driver.get("localhost:8080/index");
+        driver.findElement(By.id("email")).sendKeys("a");
+        driver.findElement(By.id("password")).sendKeys("a");
+        driver.findElement(By.id("yes")).click();
+        ArrayList<String> postList = new ArrayList<>();
+        postList.add("This is my first successful post");               //successful
+        postList.add("");                                               //empty string
+        postList.add("THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST THIS IS A LONG POST over 500 characters");
+        for(String post : postList) {
+            driver.findElement(By.id("status")).sendKeys(post);
+            driver.findElement(By.id("confirm")).click();
+        }
 //        for (LogEntry entry : driver.manage().logs().get(LogType.BROWSER)) {
 //            String msg = entry.getMessage();
 //            System.err.println("Message: " + msg);
