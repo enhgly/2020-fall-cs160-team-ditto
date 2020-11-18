@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,7 +21,11 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank(message = "Password is a required field")
+    @Size(min = 8, max = 16)
     private String password;
     private String dateOfBirth;
     private String gender;

@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 
@@ -16,6 +18,8 @@ public class Post {
 	private Long postId;
 	private Long channelId;
 	private Long userId;
+	@NotBlank(message = "Post cannot be blank")
+	@Size(min = 1, max = 500)
 	private String postText;
 	private String user;
 	@NotNull
