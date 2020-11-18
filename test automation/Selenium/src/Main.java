@@ -52,6 +52,8 @@ public class Main {
             driver.findElement(By.id("gender")).sendKeys(signupinfo.gender);
             driver.findElement(By.id("phone")).sendKeys(signupinfo.phone);
             driver.findElement(By.id("submit")).submit();
+            String signupstatus = driver.findElement(By.id("signupstatus")).getText();
+            System.out.println(signupinfo.task + " | " + signupstatus);
             //look for text field for if error message is displayed
             //print message saying if message is displayed or not along with signupinfo.task
         }
