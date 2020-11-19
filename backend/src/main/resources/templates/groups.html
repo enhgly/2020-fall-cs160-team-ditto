@@ -30,7 +30,7 @@
                     url: "gc/post",
                     data: JSON.stringify({ groupName: $("#group_name").val() }),
                     success: function (result) {
-                        associate(result);
+                        associate(result, res);
                         window.location.href = "group_channels" + "?id=" + res + "&group=" + result;
                     },
                     error: function (msg) {
@@ -85,10 +85,10 @@
                 });
             }
 
-            function associate(group_id) {
+            function associate(group_id, usid) {
                 var some_data = {
                     groupId: group_id,
-                    userId: res
+                    userId: usid
                 }
                 $.ajax({
                     type: "POST",
@@ -122,8 +122,11 @@
 </header>
 
 <body>
+    <h3>Servers:</h3>
     <div id="listings"></div>
-    <input type="text" id="group_name" />
+    <br>
+    <h3>Create Group:</h3>
+    <input type="text" id="group_name" placeholder="group name"/>
     <button id="add">New Group</button>
     <button id="test">test</button>
     <button id="test2">test2</button>

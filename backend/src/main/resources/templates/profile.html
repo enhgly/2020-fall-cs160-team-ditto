@@ -128,7 +128,6 @@
             contentType: "application/json",
             url: "comments/save",
             data: JSON.stringify(new_comment),
-            dataType: 'json',
             success: function (result) {
               $("#comment" + text_id).val("");
               console.log("woke");
@@ -169,8 +168,7 @@
     <ul>
       <li><a id="home">Home</a></li>
       <li><a id="gps">Groups</a></li>
-      <li><a href="#">Channels</a></li>
-      <li><a href="#">Settings</a></li>
+      <li><a href="/settings">Settings</a></li>
     </ul>
   </nav>
   <label for="nav-toggle" class="nav-toggle-label">

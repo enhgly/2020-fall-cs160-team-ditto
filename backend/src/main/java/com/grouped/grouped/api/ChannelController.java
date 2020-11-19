@@ -41,7 +41,6 @@ public class ChannelController {
 
 	@PostMapping(value = "/get_id")
 	public List<Channel> getByGroupId(@RequestBody Channel channel) {
-		System.out.println(channel.getGroupId()); 
 		return channelService.getByGroupId(channel.getGroupId());
 	}
 	

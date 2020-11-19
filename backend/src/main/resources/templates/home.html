@@ -10,6 +10,7 @@
         var url = document.URL;
         var new_url = new URL(url);
         var res = new_url.searchParams.get("id");
+        var list_servers = [];
         var user_data;
 
         let a = document.getElementById("home");
@@ -115,7 +116,7 @@
     <ul>
       <li><a id="home">Home</a></li>
       <li><a id="gps">Groups</a></li>
-      <li><a href="#">Settings</a></li>
+      <li><a href="/settings">Settings</a></li>
     </ul>
   </nav>
   <label for="nav-toggle" class="nav-toggle-label">

@@ -55,6 +55,12 @@ public class PersonService {
 		return res.get(0);
 	}
 	
+	public List<User> getByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
+		List<User> users = new ArrayList<User>();
+		personRepo.findByFirstNameAndLastName(firstName, lastName).forEach(users::add);
+        return users;
+	}
+
 	// use save or delete methods
 	// use find method to return a single person
 	// look up JPA methods

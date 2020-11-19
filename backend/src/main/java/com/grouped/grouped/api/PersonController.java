@@ -66,6 +66,12 @@ public class PersonController {
 		}
 		return true;
 	}
+
+	@PostMapping(path = "/search_name")
+	public List<User> getByFirstNameAndLastName(@RequestBody User person) {
+		return personService.getByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+	}
+
 	/*
 	@GetMapping(path = "/{id}")
 	public Person getPersonById(@PathVariable("id")UUID id) {

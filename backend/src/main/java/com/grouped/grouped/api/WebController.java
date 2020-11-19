@@ -48,6 +48,11 @@ public class WebController {
         return "channels";
     }
 
+    @GetMapping(value="/settings")
+    public String settings() {
+        return "settings";
+    }
+
     /*@GetMapping(value="/event")
     public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "profile";

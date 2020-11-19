@@ -8,4 +8,5 @@ public interface PersonRepo extends CrudRepository<User, Long>
 {
 	List<User> findByEmailAndPassword(String email, String password);
 
+	List<User> findByFirstNameAndLastName(String firstName, String lastName);
 }
