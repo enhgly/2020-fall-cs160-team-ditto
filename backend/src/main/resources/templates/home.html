@@ -8,9 +8,17 @@
     <script>
       $(document).ready(function () {
         var url = document.URL;
-        var n = url.indexOf("=");
-        var res = parseInt(url.substring(n + 1));
+        var new_url = new URL(url);
+        var res = new_url.searchParams.get("id");
+        var list_servers = [];
         var user_data;
+
+        let a = document.getElementById("home");
+        a.href = "/home?id=" + res;
+
+        let b = document.getElementById("gps");
+        b.href = "/groups?id=" + res;
+
         onStart();
 
         function onStart() {
@@ -106,11 +114,10 @@
   <input type="checkbox" id="nav-toggle" class="nav-toggle">
   <nav>
     <ul>
-      <li><a href="/home">Home</a></li>
-      <li><a href="#">Groups</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Posts</a></li>
-      <li><a href="#">Settings</a></li>
+      <li><a id="home">Home</a></li>
+      <li><a id="gps">Groups</a></li>
+      <li><a href="/settings">Settings</a></li>
+      <li><a href="/index">Sign Out</a></li>
     </ul>
   </nav>
   <label for="nav-toggle" class="nav-toggle-label">

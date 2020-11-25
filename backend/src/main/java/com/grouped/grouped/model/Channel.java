@@ -12,15 +12,15 @@ public class Channel {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long channel_id;
+	private Long channelId;
 	@NotBlank
 	private String name;
-	private Long group_id;
+	private Long groupId;
 	private String type;
 	
 
 	public void setChannelId(Long id) {
-		this.channel_id = id;
+		this.channelId = id;
 	}
 	
 	public void setName(String name) {
@@ -28,7 +28,7 @@ public class Channel {
 	}
 	
 	public Long getChannelId() {
-		return channel_id;
+		return channelId;
 	}
 	
 	public String getName() {
@@ -43,12 +43,12 @@ public class Channel {
 		this.type = type;
 	}
 
-	public Long getGroup_id() {
-		return group_id;
+	public Long getGroupId() {
+		return groupId;
 	}
 
-	public void setGroup_id(Long group_id) {
-		this.group_id = group_id;
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
 	}
 
 

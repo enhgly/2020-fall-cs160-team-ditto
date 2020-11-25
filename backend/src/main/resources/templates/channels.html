@@ -1,0 +1,198 @@
+<html>
+<header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = document.URL;
+            var new_url = new URL(url);
+            var res = new_url.searchParams.get("id");
+            var gid = new_url.searchParams.get("group");
+            onStart();
+            list();
+
+            function onStart() {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "gc/get_id",
+                    data: JSON.stringify({groupId: gid}),
+                    success: function (result) {
+                        $("#title").append("<h1>" + result[0].groupName + "</h1>")
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function list() {
+                var ljlj = {groupId : gid};
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "channels/get_id",
+                    data: JSON.stringify(ljlj),
+                    success: function (result) {
+                        for(i=0; i<result.length; i++) {
+                            if(result[i].type == "posts") {
+                                $("#list_channels").append("<a href=\"profile?id=" + res + "&channel=" + result[i].channelId + "\">" + result[i].name + "</a></br>");
+                            }
+                            else {
+                                $("#list_channels").append("<a href=\"party?id=" + res + "&channel=" + result[i].channelId + "\">" + result[i].name + "</a></br>");
+                            }
+                            
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            $("#add").click(function (event) {
+                event.preventDefault();
+                if($("#myform input[type='radio']:checked").val() != null) {
+                    newChannel();
+                }
+            });
+
+            $("#test").click(function (event) {
+                event.preventDefault();
+                testing();
+            });
+
+            function newChannel() {
+                var more_data = {
+                    name: $("#channel_name").val(),
+                    groupId: gid,
+                    type: $("#myform input[type='radio']:checked").val()
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "channels/post",
+                    data: JSON.stringify(more_data),
+                    success: function (result) {
+                        window.location.href = url;
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            $("#look").click(function (event) {
+                event.preventDefault();
+                find();
+            });
+
+            function find() {
+                var find_names = {
+                    firstName: $("#first_name").val(),
+                    lastName: $("#last_name").val()
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "api/user/search_name",
+                    data: JSON.stringify(find_names),
+                    success: function (result) {
+                        $("#first_name").val("");
+                        $("#last_name").val("");
+                        $("#people").empty();
+                        for(i=0; i<result.length; i++) {
+                            $("#people").append(result[i].firstName + " " + result[i].lastName + "<button id=\"" + i + "\">add</button>");
+                            let input = document.getElementById(i + "");
+                            let the_guy = result[i].id;
+                            let the_id = i;
+                            check(the_guy, the_id);
+                            input.onclick = function (event) {
+                                associate(gid, the_guy);
+                                document.getElementById(the_id).disabled = true;
+                            };
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function associate(group_id, usid) {
+                var some_data = {
+                    groupId: group_id,
+                    userId: usid
+                }
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "servers/post",
+                    data: JSON.stringify(some_data),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function check(add_id, button) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "servers/get_id",
+                    data: JSON.stringify({ userId: add_id }),
+                    success: function (result) {
+                        for (i = 0; i < result.length; i++) {
+                            if(result[i].groupId == gid) {
+                                document.getElementById(button).disabled = true;
+                            }
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+
+            function testing() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "channels/get",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (msg) {
+                        console.log(result);
+                    }
+                });
+            }
+        })
+    </script>
+</header>
+
+<body>
+    <div id="title"></div>
+    <h3>Channels:</h3>
+    <div id="list_channels"></div>
+    <br>
+    <h3>Create Channel:</h3>
+    <input type="text" id="channel_name" placeholder="channel name" />
+    <form id="myForm">
+        <p>Type:</p>
+        <input type="radio" name="posts" value="posts" /> posts <br />
+        <input type="radio" name="posts" value="events" /> events <br />
+    </form>
+    <button id="add">Create Channel</button>
+    <button id="test">test</button>
+    <br>
+    <h3>Invite to Group:</h3>
+    <input type="text" id="first_name" placeholder="first name"/>
+    <input type="text" id="last_name" placeholder="last name"/>
+    <button id="look">Search</button>
+    <div id="people"></div>
+</body>
+
+</html>

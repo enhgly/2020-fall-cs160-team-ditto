@@ -19,7 +19,7 @@ public class WebController {
     }
 
     @GetMapping(value="/profile")
-    public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+    public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id, @RequestParam(required = false, defaultValue = "-1", value="channel") Long channel) {
         return "profile";
     }    
 
@@ -29,7 +29,7 @@ public class WebController {
     }
     
     @GetMapping(value="/party")
-    public String event(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+    public String event(@RequestParam(required = false, defaultValue = "-1", value="id") Long id, @RequestParam(required = false, defaultValue = "-1", value="channel") Long channel) {
         return "event";
     }   
 
@@ -37,6 +37,21 @@ public class WebController {
     public String comment(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
         return "comment";
     }   
+
+    @GetMapping(value="/groups")
+    public String theName(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {
+        return "groups";
+    }
+
+    @GetMapping(value="/group_channels")
+    public String ch(@RequestParam(required = false, defaultValue = "-1", value="id") Long id, @RequestParam(required = false, defaultValue = "-1", value="id") Long group) {
+        return "channels";
+    }
+
+    @GetMapping(value="/settings")
+    public String settings() {
+        return "settings";
+    }
 
     /*@GetMapping(value="/event")
     public String profile(@RequestParam(required = false, defaultValue = "-1", value="id") Long id) {

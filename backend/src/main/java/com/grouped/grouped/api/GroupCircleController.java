@@ -1,5 +1,6 @@
 package com.grouped.grouped.api;
 
+//import java.security.acl.Group;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ import com.grouped.grouped.model.GroupCircle;
 import com.grouped.grouped.service.GroupCircleService;
 
 
-@RequestMapping("/grouped")
+@RequestMapping("/gc")
 @RestController
 public class GroupCircleController {
 	
@@ -28,17 +29,22 @@ public class GroupCircleController {
 		this.groupService = groupService; 
 	}
 	
-	@PostMapping(value = "/group")
-	public void addGroup(@Valid @RequestBody GroupCircle group) {
-		groupService.addGroup(group);
+	@PostMapping(value = "/post")
+	public Long addGroup(@Valid @RequestBody GroupCircle group) {
+		return groupService.addGroup(group);
 	}
 	
-	@GetMapping(value = "/group")
+	@GetMapping(value = "/get")
 	public List<GroupCircle> getAllGroups() { 
 		return groupService.getAllGroups();
 	}
+
+	@PostMapping(value = "/get_id")
+	public List<GroupCircle> getByGroupId(@RequestBody GroupCircle group) { 
+		return groupService.getByGroupId(group.getGroupId());
+	}
 	
-	@DeleteMapping(path = "/group/{id}")
+	@DeleteMapping(path = "/delete/{id}")
 	public void deleteGroupById(@PathVariable("id") Long id) {
 		groupService.deleteGroup(id);
 	}

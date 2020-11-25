@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grouped.grouped.model.Channel;
-
 import com.grouped.grouped.service.ChannelService;
 
 
-@RequestMapping("/grouped")
+@RequestMapping("/channels")
 @RestController
 public class ChannelController {
 	
@@ -30,14 +29,19 @@ public class ChannelController {
 		this.channelService = channelService; 
 	}
 	
-	@PostMapping(value = "/channel")
+	@PostMapping(value = "/post")
 	public void addChannel(@Valid @NonNull @RequestBody Channel channel) {
 		channelService.addChannel(channel);
 	}
 	
-	@GetMapping(value = "/channel")
+	@GetMapping(value = "/get")
 	public List<Channel> getAllChannels() { 
 		return channelService.getAllChannels();
+	}
+
+	@PostMapping(value = "/get_id")
+	public List<Channel> getByGroupId(@RequestBody Channel channel) {
+		return channelService.getByGroupId(channel.getGroupId());
 	}
 	
 	@DeleteMapping(path = "/channel/{id}")
