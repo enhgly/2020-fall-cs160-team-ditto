@@ -1,0 +1,1085 @@
+{
+	"info": {
+		"_postman_id": "ac71d55d-8543-4344-abf9-6d3df8063433",
+		"name": "Grouped Test Automation",
+		"description": "This is a test collection for Postman automating tests for sign up and login APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup Tests",
+			"item": [
+				{
+					"name": "{{url}}/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e87bbf4-65b3-4f69-ae7a-a218d492bbb4",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201, 202]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"firstName\": \"Christian\",\r\n        \"lastName\": \"Miller\",\r\n        \"email\": \"christian.miller@email.com\",\r\n        \"password\": \"myPASS123\",\r\n        \"dateOfBirth\": \"04-22-1992\",\r\n        \"gender\": \"Male\",\r\n        \"phone\": \"555-555-5555\"\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c0d179af-6c06-4bf8-b7b1-ba4ab6b6b7d6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Check if user with id 84 is Christian\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[26].firstName).to.eql(\"Christian\");\r",
+									"});\r",
+									"pm.test(\"Check if user with id 84 email is christian.miller@email.com\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[26].email).to.eql(\"christian.miller@email.com\");\r",
+									"});\r",
+									"pm.test(\"Check if user with id 84 password is myPASS123\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[26].password).to.eql(\"myPASS123\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response must be valid and have a body\", function () {\r",
+									"     pm.response.to.be.ok;\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"fetch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8bce3fe3-457c-4f79-87f3-8bcc77a2d05d",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if email was rejected because NULL\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"must not be blank\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"password\": \"myPassword\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0c6a88c-edb5-458e-a0d8-21212fb98290",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if email was rejected because EMPTY\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"must not be blank\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"\",\r\n    \"password\": \"myPassword\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Check if email was reject because blank"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3fdee66-4da1-42b3-8f84-c127c0b6610f",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if email was rejected because email NOT VALID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"must be a well-formed email address\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"notValid @ email \",\r\n    \"password\": \"yPassasdf\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Reject because of invalid email address "
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31721677-996a-4ebb-889a-88c57381f7e9",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if password was rejected because too short\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Password must be equal to or greater than 8 characters and less than 16 characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"notValid@email\",\r\n    \"password\": \"myPass\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Reject because password too short"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa6d6987-83f3-424f-a41d-b836af0be08c",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if password was rejected because too long\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Password must be equal to or greater than 8 characters and less than 16 characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"notValid@email\",\r\n    \"password\": \"myPasswordIsWayTooLong\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Reject because password is too long"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1627e405-8e06-48bc-a583-cf6580fb1d7c",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if password was rejected because NULL\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Password is a required field\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"notValid@email\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Rejected because password is NULL"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/api/user/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12d36f81-f99f-49a2-acf3-ab79db8db099",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if password was rejected because EMPTY\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Password must be equal to or greater than 8 characters and less than 16 characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Chris\",\r\n    \"lastName\": \"Miller\",\r\n    \"email\": \"notValid@email\",\r\n    \"password\": \"\",\r\n    \"dateOfBirth\": \"04-23-92\",\r\n    \"gender\": \"Male\",\r\n    \"phone\": \"555-555-5555\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"save"
+							]
+						},
+						"description": "Reject because password EMPTY"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6e1fc004-a96f-4ff8-afe7-e9a7bacdb200",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "71c1b2a2-eecc-4a58-80da-eba986da7695",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Signin Tests",
+			"item": [
+				{
+					"name": "{{url}}/api/user/signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a59290a-119b-4ef4-be69-7f34356b4827",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//user id is present\r",
+									"pm.test(\"user id is present\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).not.eql(-1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Return user ID with matching email and password\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"83\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \r\n        \"email\": \"christian.miller@email.com\",\r\n        \"password\": \"myPASS123\"\r\n\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						},
+						"description": "Valid login request"
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/api/user/signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b7ac6ec-eaf4-47bd-9d19-4f034025a9f3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//user id is present\r",
+									"pm.test(\"user id is NOT present, wrong password\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(pm.response.text()).to.include(\"-1\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \r\n        \"email\": \"grissom@gmail.com\",\r\n        \"password\": \"password123\"\r\n\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/api/user/signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f3dfe08-8c60-47c2-b84b-9fbca750809a",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//user id is present\r",
+									"pm.test(\"user id is NOT present, NULL values\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).is.to.equal(\"Bad Request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "NULL",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ASD",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/api/user/signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c004e7d-144d-425a-b891-143921bea1db",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//user id is present\r",
+									"pm.test(\"Invalid Characters in Email\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).is.to.equal(\"Bad Request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "*&*!@",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "noGoodPass",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/api/user/signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "86c14e36-81c4-46a5-896b-72320d48c684",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"//user id is present\r",
+									"pm.test(\"Improper email, Bad Request Response\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).is.to.equal(\"Bad Request\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3b803b99-7019-4199-bff4-98ac48c3335e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e43529ed-2261-4128-aa79-785d80dbd802",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Post Tests",
+			"item": [
+				{
+					"name": "{{url}}/grouped/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f1e8fc4c-a801-4614-a5b1-f2ed6b12e184",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Check if post was rejected because too long (501 Characters)\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Post must be between 1 and 500 characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n        \"channelId\": 0,\r\n        \"userId\": 11,\r\n        \"postText\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu1\",\r\n        \"user\": \"Christian Miller\",\r\n        \"createdDate\": \"Sat Nov 07 2020 22:41:47 GMT-0800 (Pacific Standard Time)\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/grouped/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"post"
+							]
+						},
+						"description": "Reject post because too many characters"
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/grouped/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90625646-096d-409a-b784-8089661739a1",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Check if post was rejected because EMPTY\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Post cannot be blank\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n        \"channelId\": 0,\r\n        \"userId\": 11,\r\n        \"postText\": \"\",\r\n        \"user\": \"Christian Miller\",\r\n        \"createdDate\": \"Sat Nov 16 2020 22:41:47 GMT-0800 (Pacific Standard Time)\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/grouped/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"post"
+							]
+						},
+						"description": "Reject post because EMPTY post"
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/grouped/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3350f73a-444c-4c5e-82c2-755300ea1b84",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Check if post was rejected because NULL\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].defaultMessage).is.to.equal(\"Post cannot be blank\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "     {\r\n        \"channelId\": 0,\r\n        \"userId\": 11,\r\n        \"user\": \"Christian Miller\",\r\n        \"createdDate\": \"Sat Nov 16 2020 22:41:47 GMT-0800 (Pacific Standard Time)\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/grouped/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"post"
+							]
+						},
+						"description": "Reject because Post is NULL"
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/grouped/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a8fe338-a4c6-4fe8-afb9-d3f257b091e0",
+								"exec": [
+									"pm.test(\"Check successful post with exactly 500 characters \", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n        \"channelId\": 0,\r\n        \"userId\": 11,\r\n        \"postText\": \"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu\",\r\n        \"user\": \"Christian Miller\",\r\n        \"createdDate\": \"Sat Nov 07 2020 22:41:47 GMT-0800 (Pacific Standard Time)\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/grouped/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/grouped/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a5391f60-9137-4393-bbcf-7016f0bea0c4",
+								"exec": [
+									"pm.test(\"Check successful post with 1 character \", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n        \"channelId\": 0,\r\n        \"userId\": 11,\r\n        \"postText\": \"L\",\r\n        \"user\": \"Christian Miller\",\r\n        \"createdDate\": \"Sat Nov 07 2020 22:41:47 GMT-0800 (Pacific Standard Time)\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/grouped/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/grouped/retrieve_posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b352dbe2-a738-4dfb-8299-164d1d244d7a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/grouped/retrieve_posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"grouped",
+								"retrieve_posts"
+							]
+						},
+						"description": "Retreives all posts"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1bad6606-d7ee-4ec0-88a5-809bbdd052aa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9d7d3c0e-de53-426a-b7e8-dac7e07dbad4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
