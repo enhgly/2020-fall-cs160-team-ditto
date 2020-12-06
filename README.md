@@ -16,3 +16,6 @@
 3) Re-connect to the webpage by refreshing or re-entering the ```localhost:8080/index```
 4) Make a new branch and name it after the function that you added or changed. 
     Open a pull request afterwards if you are done with the function for review.
+
+## User Guide
+Click here to read the user manual: https://docs.google.com/document/d/1f2EHNyvJU3NIBvjCz4gx5lweUGNDytvpS7_v-hVmc8w/edit?usp=sharing
