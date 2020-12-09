@@ -1,5 +1,34 @@
 # 2020-fall-cs160-team-ditto
 
+## Paths
+```
+2020-fall-cs160-team-ditto
+│   README.md
+│       
+└─── backend
+|   └─── src/main
+|   |    └─── java/com/grouped/grouped
+|   |    |     | Backend files
+|   |    |     |
+|   |    |     └─── api
+|   |    |     |    | Controllers
+|   |    |     |    |
+|   |    |     |    model
+|   |    |     |    | Models / Classes that model data to be used in databases
+|   |    |     |    |
+|   |    |     |    service
+|   |    |     |    | Service files to connect models to databases
+|   |    |     resources
+|   |    |     | Frontend files
+|   |    |     |
+|   |    |     └─── static
+|   |    |     |     | All the CSS files and images
+|   |    |     |     |
+|   |    |     |     templates
+|   |    |     |     | All the html files
+|   |    |     |     |   
+```
+
 ## Setting up the environment
 1) Pull or download the repo onto your local machine.
 2) Open your terminal or command line and change directories to the location of the project.
